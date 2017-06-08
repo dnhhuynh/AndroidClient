@@ -1,0 +1,82 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+
+public class Assign7 
+{
+	static int NUM_CLASSES_PER_STUDENT = 11;
+	static JButton submitButton = new JButton("Submit");
+	static JLabel[] classLabels = new JLabel[NUM_CLASSES_PER_STUDENT];
+	static String[] classNames = {"Major ProSeminar", "Multimedia Design and Programming", 
+		"Introduction to Database Systems", "Internet Programming", "Intro to Computer Networks", 
+		"Technology Tutors", "Software Design", "Software Engineering", 
+		"Design and Analysis of Algorithms", "Ethics in Comm and Tech", "Directed Group Capstone"};
+	static JCheckBox[] classCheckBoxes = new JCheckBox[NUM_CLASSES_PER_STUDENT];
+	static CheckListWindow myCheckList = new CheckListWindow("Check List");
+	
+	public static void main(String[] args)
+	{
+		myCheckList.setSize(600, 600);
+		myCheckList.setLocationRelativeTo(null);
+		myCheckList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		addCheckBoxes();
+		addClassLabels();
+		myCheckList.setVisible(true);
+		myCheckList.submitPanel.add(submitButton);
+	}
+	
+	public static void addCheckBoxes()
+	{
+		for (int i = 0; i < NUM_CLASSES_PER_STUDENT; i++)
+		{
+			classCheckBoxes[i] = new JCheckBox();
+			myCheckList.checkBoxPanel.add(classCheckBoxes[i], BorderLayout.CENTER);
+		}
+	}
+	
+	public static void addClassLabels()
+	{
+		for (int i = 0; i < NUM_CLASSES_PER_STUDENT; i++)
+		{
+			classLabels[i] = new JLabel(classNames[i]);
+			myCheckList.classLabelPanel.add(classLabels[i]);
+		}
+	}
+}
+
+
+//This class will control the positioning of the panels and cards of the GUI. 
+class CheckListWindow extends JFrame 
+{
+	public JPanel mainPanel, checkBoxPanel, classLabelPanel, submitPanel;
+
+	// Constructor: filters input, adds any panels to the JFrame, and establishes layouts
+	public CheckListWindow(String title) 
+	{
+		// Creating new JPanels and using gridLayout to place components in a grid of cells : (row, col, hor gap, vert gap)
+		mainPanel = new JPanel(new GridLayout(1, 2));
+		checkBoxPanel = new JPanel(new GridLayout(11, 1));
+		classLabelPanel = new JPanel(new GridLayout(11, 1));
+		submitPanel = new JPanel(new GridLayout(1, 1));
+
+		// Setting layout manager: 
+		setLayout (new BorderLayout(1, 1));
+
+		// Adding components: 
+		add(mainPanel, BorderLayout.CENTER);
+		mainPanel.add(checkBoxPanel,BorderLayout.EAST);
+		mainPanel.add(classLabelPanel,BorderLayout.WEST);
+		add(submitPanel,BorderLayout.SOUTH);
+
+		// Adding arbitrary borders with a String titles: 
+		mainPanel.setBorder(new TitledBorder("Check Off List"));
+	}
+}
+
+
